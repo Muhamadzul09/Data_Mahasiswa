@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Post;
+use App\Models\Galery;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\GaleryController;
 use App\Http\Controllers\PendaftaranController;
 
 /*
@@ -34,8 +35,12 @@ Route::get('/about', function () {
 });
 
 Route::get('/pendaftaran', [PendaftaranController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
 
-Route::get('/galeries', [PostController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'   ])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('galeries/{slug}', [PostController::class, 'show']);
+
+Route::get('/galery', [GaleryController::class, 'index']);
+
+Route::get('galeries/{galery:slug}', [GaleryController::class, 'show']);
